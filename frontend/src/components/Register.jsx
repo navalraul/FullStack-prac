@@ -17,29 +17,37 @@ const Register = () => {
         setUserData({ ...userData, [event.target.name]: event.target.value })
     }
 
-    const handleSubmit = async (event) => {
+    const handleChangeForSelect = (event) => {
+        setUserData({...userData, "role": event.target.value})
+    }
+
+
+    const handleSubmit = async(event) => {
         event.preventDefault();
-        if(userData.name && userData.email && userData.number && userData.password && userData.confirmPassword && userData.role) {
-            if(userData.password === userData.confirmPassword) {
-                try {
+        if(userData.name && userData.email && userData.number && userData.role && userData.password && userData.confirmPassword) {
+            if(userData.password === userData.confirmPassword){
+                try{
                     const response = await api.post("/register", {userData})
+
                     if(response.data.success) {
-                        setUserData({name: "", email: "", number: "", password: "", confirmPassword: "", role: "Buyer"})
+                        setUserData({ name: "", email: "", number: "", password: "", confirmPassword: "", role: "Buyer" })
                         toast.success(response.data.message)
-                        router("/login")
-                    } else{
+                        router('/login')
+                    } else {
                         toast.error(response.data.message)
                     }
-                } catch (error) {
+                }catch(error){
                     toast.error(error.response.data.message)
                 }
-            } else {
-                toast.error("Password and ConfirmPassword not matched")
+
+            } else{
+                toast.error("Password and confirmPassword not matched")
             }
-        }else {
-            toast.error("Please fill all the fields!")
+        } else {
+            toast.error("All fields are mandatory")
         }
-    };
+    }
+    
 
 
     useEffect(()=> {
@@ -48,14 +56,11 @@ const Register = () => {
         }
     },[state])
 
-    const handleChangeForSelect = (event) => {
-        setUserData({...userData, "role": event.target.value})
-    }
-
+    
     return (
         <div>
             <h2>Register</h2>
-            <form onClick={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label>Name:</label><br />
                 <input type='text' onChange={handleChange} name='name' value={userData.name} /><br />
                 <label>Eamil:</label><br />

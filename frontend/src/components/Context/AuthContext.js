@@ -32,7 +32,7 @@ const AuthProvider = ({children}) => {
             type: "LOGIN",
             payload: userData.user,
         })
-    }
+    };
 
     const Logout = () => {
         localStorage.removeItem("Token");
@@ -58,7 +58,7 @@ const AuthProvider = ({children}) => {
                         toast.error(response.data.message);
                     }
                 } catch(error) {
-                    console.log(error)
+                    console.log(error, "error in current user")
                 }
             }
         };
