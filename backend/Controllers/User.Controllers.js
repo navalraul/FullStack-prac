@@ -30,7 +30,6 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
     try{
-
         const { email, password} = req.body.userData;
 
         if(!email || !password) return res.json({ success: false, message: "All fields are mandatory.."})
